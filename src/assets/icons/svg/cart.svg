@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<polygon class="ci-primary" points="160 96.039 160 128.04 464 128.04 464 191.38 428.5 304.04 149.93 304.04 109.93 16 16 16 16 48 82.068 48 122.07 336.04 451.97 336.04 496 196.31 496 96.039" fill="var(--ci-primary-color, currentColor)"/>
+<path class="ci-primary" d="m176.98 368.34a64.073 64.073 0 0 0-64 64 64 64 0 0 0 128 0 64.072 64.072 0 0 0-64-64zm0 96a32 32 0 1 1 32-32 32.038 32.038 0 0 1-32 32z" fill="var(--ci-primary-color, currentColor)"/>
+<path class="ci-primary" d="m400.98 368.34a64.073 64.073 0 0 0-64 64 64 64 0 0 0 128 0 64.072 64.072 0 0 0-64-64zm0 96a32 32 0 1 1 32-32 32.038 32.038 0 0 1-32 32z" fill="var(--ci-primary-color, currentColor)"/>
+</svg>

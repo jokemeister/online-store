@@ -1,0 +1,55 @@
+/* global */
+    :root {
+        /* font */
+        --globalFontFamily: 'Open Sans', sans-serif;
+        /* /font */
+
+        /* text */
+        --font-size: 16px;
+        --line-height: 1.362;
+        --font-weight-400: 400;
+        /* /text */
+
+        /* color */
+            --black-700: rgb(0, 0, 0) !important;
+            --gray-700: rgb(243, 242, 242) !important;
+            --brown-700: rgb(196, 155, 109) !important;
+        /* /color */
+    }
+
+    body {
+        padding: 0;
+        margin: 0;
+        font-family: var(--globalFontFamily);
+        font-size: var(--font-size-16);
+        line-height: var(--line-height);
+        overflow-x: hidden;
+        color: var(--black-700);
+    }
+
+    body * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    a {
+        text-decoration: none !important;
+        color: initial !important;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    p {
+        margin-bottom: 0 !important;
+    }
+
+    .container {
+        max-width: 1200px;
+        width: 95%;
+        margin: 0 auto;
+    }
+
+/* /global */

@@ -1,0 +1,32 @@
+.gallery-block {
+    position: relative;
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.secondary-image {
+    margin: 1rem;
+    cursor: pointer;
+    max-width: 4rem !important;
+    border-radius: 2%;
+}
+
+.secondary-image.selected {
+    border: 2px solid rgb(0, 149, 255);
+}
+
+.product-title {
+    font-size: 2rem;
+    margin-bottom: 2rem !important;
+}
+
+.product-subtitle {
+    font-size: 1.5rem;
+    margin: 1rem auto !important;
+}
+
+.product-text {
+    font-size: 1rem;
+}

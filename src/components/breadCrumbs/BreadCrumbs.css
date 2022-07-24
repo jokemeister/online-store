@@ -1,0 +1,7 @@
+.breadcrumb-item:hover a {
+    color: rgb(83, 82, 82)!important;
+}
+
+.breadcrumb-item.is-active {
+    color: rgb(83, 82, 82)!important;
+}
