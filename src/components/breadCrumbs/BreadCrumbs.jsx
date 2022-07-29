@@ -12,11 +12,11 @@ export const Breadcrumbs = () => {
     return (
         <div className="container">
             <Breadcrumb>
-            {breadcrumbs.map(({ breadcrumb }) =>
-                <Breadcrumb.Item key={breadcrumb.key} href={breadcrumb.key} active={breadcrumb.key === location.pathname}>
-                    { translate(breadcrumb.props.children.toLowerCase()) }
-                </Breadcrumb.Item >
-            )}
+                {breadcrumbs.map(({ breadcrumb }) =>
+                    <Breadcrumb.Item key={breadcrumb.key} href={breadcrumb.key} active={breadcrumb.key === location.pathname}>
+                        { translate(breadcrumb.props.children.toLowerCase()) }
+                    </Breadcrumb.Item >
+                )}
             </Breadcrumb>
         </div>
     )

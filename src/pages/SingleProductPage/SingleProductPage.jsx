@@ -9,9 +9,9 @@ import './SingleProductPage.css';
 
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../../store/cartSlice';
 import { useParams } from 'react-router-dom';
-import { addToFavorite } from '../../store/favoriteSlice';
+import { addToCart, fetchCart } from '../../store/cartSlice';
+import { addToFavorite, fetchFavorite } from '../../store/favoriteSlice';
 
 export const SingleProductPage = () => {
     const [product, setProduct] = useState({});
@@ -21,26 +21,31 @@ export const SingleProductPage = () => {
   const dispatch = useDispatch();
   const { queryTag } = useParams();
 
-  const findProduct = () => {
-    let currentProduct = products.find(product => product.tag === queryTag)
-    if (currentProduct) {
-        localStorage.setItem('currentProduct', JSON.stringify(currentProduct));
-    } else currentProduct = JSON.parse(localStorage.getItem('currentProduct'));
-    return currentProduct
-  }
-  useEffect(() => {
-    setProduct(findProduct());
-  }, [])
+    // get product for render
+    const findProduct = () => {
+        let currentProduct = products.find(product => product.tag === queryTag)
+        if (currentProduct) {
+            localStorage.setItem('currentProduct', JSON.stringify(currentProduct));
+        } else currentProduct = JSON.parse(localStorage.getItem('currentProduct'));
+        return currentProduct
+    }
+
+    useEffect(() => {
+        setProduct(findProduct());
+    }, [])
+    // /get product for render
 
   // cart
   const addProductToCart = (product, currentUser) => {
     dispatch(addToCart({product, currentUser}));
+    dispatch(fetchCart(currentUser));
   }
   // /cart
 
   // favorite
   const addProductToFavorite = (product, currentUser) => {
     dispatch(addToFavorite({product, currentUser}));
+    dispatch(fetchFavorite(currentUser));
   }
   // /favorite
 
