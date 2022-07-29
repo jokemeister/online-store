@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { collection, doc, docs, getDoc, getFirestore, where, query, orderBy, getDocs, limit, onSnapshot } from "firebase/firestore"; 
+import { collection, getFirestore, query, orderBy, getDocs, limit } from "firebase/firestore"; 
 import '../fireBase';
 
 const firestore = getFirestore();

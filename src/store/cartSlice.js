@@ -23,7 +23,7 @@ export const fetchCart = createAsyncThunk(
                     return data;
                 });
                 if (querySnapshot.empty) {
-                    throw new Error();
+                    return data;
                 }
                 return data;
             }
@@ -38,11 +38,8 @@ export const fetchCart = createAsyncThunk(
 export const createUserCart = createAsyncThunk(
     'cart/createUserCart',
 
-    async function(ip, {rejectWithValue, dispatch}) {
-        const user = {
-            ip_address: ip
-        }
-        console.log(ip);
+    async function(ip, {rejectWithValue}) {
+        const user = ip;
         try {
             await setDoc(doc(firestore, `${'cart/'}`, ip), user);
         } catch (error) {
@@ -67,8 +64,6 @@ export const removeFromCart = createAsyncThunk(
     'cart/removeFromCart',
 
     async function({product, currentUser}, {rejectWithValue}) {
-        console.log('product on slice', product);
-        console.log('user on slice', currentUser);
         try {
             await deleteDoc(doc(firestore, `${'cart/' + currentUser + '/products'}`, product.tag));
         } catch (error) {
@@ -86,8 +81,8 @@ const setError = (state, action) => {
 const cartSlice = createSlice({
     name: 'cart',
     initialState: {
-        user: '109.227.87.143',
-        products: [],
+        user: '103.227.87.140',
+        cartProducts: [],
         status: null,
         error: null,
     },
@@ -102,7 +97,7 @@ const cartSlice = createSlice({
             state.error = null;
         },
         [fetchCart.fulfilled]: (state, action) => {
-            state.products = action.payload;
+            state.cartProducts = action.payload;
             state.status = "resolved";
         },
         [fetchCart.rejected]: setError

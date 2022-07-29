@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/online-store/static/css/main.68b9aaed.css",
+    "main.js": "/online-store/static/js/main.2f67c887.js",
+    "static/media/logo_2.jpg": "/online-store/static/media/logo_2.a5529d8c7007bfb526b7.jpg",
+    "index.html": "/online-store/index.html",
+    "main.68b9aaed.css.map": "/online-store/static/css/main.68b9aaed.css.map",
+    "main.2f67c887.js.map": "/online-store/static/js/main.2f67c887.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.68b9aaed.css",
+    "static/js/main.2f67c887.js"
+  ]
+}

@@ -9,46 +9,51 @@ import './Products.css';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, setQueryParams } from '../../store/productsSlice';
-import { addToCart } from '../../store/cartSlice';
+import { fetchProducts, setQueryParams, filterProducts, moreCounterIncrement } from '../../store/productsSlice';
+import { addToCart, fetchCart } from '../../store/cartSlice';
 import { useParams } from 'react-router-dom';
-import { addToFavorite } from '../../store/favoriteSlice';
+import { addToFavorite, fetchFavorite } from '../../store/favoriteSlice';
 
 export const Products = () => {
   // working with store
   const dispatch = useDispatch(),
-    products = useSelector(state => state.products.products),
-    { error, status, queryParams } = useSelector(state => state.products),
+    { error, status, queryParams, filteredProducts, searchedProducts, products, rowLength, moreLimiter, moreCounter } = useSelector(state => state.products),
     { user } = useSelector(state => state.cart),
     filterRules = useSelector(state => state.products.filterRules);
-    let filteredProducts = [];
+  let queryLimit = queryParams.queryLimit;
   // /working with store
 
   // working with routing
   const { queryTitle } = useParams(),
     navigate = useNavigate(),
     goProduct = (product) => navigate(`/categories/${queryTitle}/${product.tag}`);
-  // 
+  // /working with routing
 
   // fetching products from store with routing params
   useEffect(() => {
-    console.log('products queryParams');
     dispatch(setQueryParams({ queryTitle }));
   }, [queryTitle])
 
   useEffect(() => {
-    // console.log(queryParams);
-    console.log('products fetching');
     dispatch(fetchProducts(queryParams))
-    // console.log(products);
-    filteredProducts = filterProducts();
   }, [queryParams])
   // /fetching products from store with routing params
+
+  // filtering products
+  useEffect(() => {
+    dispatch(filterProducts(filterRules))
+  }, [products])
+
+  useEffect(() => {
+    dispatch(filterProducts(filterRules))
+  }, [filterRules])
+  // /filtering products
 
   // cart
   const addProductToCart = (product, currentUser, e) => {
     e.stopPropagation();
     dispatch(addToCart({product, currentUser}));
+    dispatch(fetchCart(currentUser));
   }
   // /cart
 
@@ -56,25 +61,16 @@ export const Products = () => {
   const addProductToFavorite = (product, currentUser, e) => {
     e.stopPropagation();
     dispatch(addToFavorite({product, currentUser}));
+    dispatch(fetchFavorite(currentUser));
   }
   // /favorite
-
-  // filter
-  const filterProducts = () => {
-    return products.filter(product => filterRules.forEach(filterRule => product[filterRule.filterBy] === filterRule.comparator));
-    // console.log(filteredProducts);
-    // console.log(products);
-  }
-  // /filter
   
-  // product[filterRule.filterBy]
   return (
     <div>
       { status === 'loading' && <h2>Loading products...</h2> }
       { error && <h2>Error: { error }</h2> }
-      <Row xs={1} md={4} className="g-4">
-        {console.log(filteredProducts)}
-        {filteredProducts.map((product) => (
+      <Row xs={1} md={rowLength} className="g-4">
+        {searchedProducts.map((product, index) => (index < moreLimiter) && (
           <Col key={product.tag}>
               <Card onClick={() => goProduct(product)}>
                 <Card.Img variant="top" src={process.env.PUBLIC_URL+`${product.img}`} />

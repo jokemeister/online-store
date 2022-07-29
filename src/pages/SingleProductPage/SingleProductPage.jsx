@@ -23,12 +23,9 @@ export const SingleProductPage = () => {
 
   const findProduct = () => {
     let currentProduct = products.find(product => product.tag === queryTag)
-    // console.log('currentProductBefore', currentProduct);
     if (currentProduct) {
         localStorage.setItem('currentProduct', JSON.stringify(currentProduct));
     } else currentProduct = JSON.parse(localStorage.getItem('currentProduct'));
-    // console.log('products', products);
-    // console.log('currentProductAfter', currentProduct);
     return currentProduct
   }
   useEffect(() => {
@@ -48,10 +45,10 @@ export const SingleProductPage = () => {
   // /favorite
 
     //   gallery
-    const primaryImage = document.querySelector('.primary-image');
-    const secondaryImages = document.querySelectorAll('.secondary-image');
-
     const changePrimaryImage = (e, image) => {
+        const primaryImage = document.querySelector('.primary-image');
+        const secondaryImages = document.querySelectorAll('.secondary-image');
+
         primaryImage.setAttribute('src', image);
         secondaryImages.forEach(element => {
             element.classList.remove('selected');
@@ -59,10 +56,11 @@ export const SingleProductPage = () => {
         e.target.classList.add('selected');
     }
     //   /gallery
+
   return (
     <Container>
         { status === 'loading' && <h2>Loading products...</h2> }
-      { error && <h2>Error: { error }</h2> }
+        { error && <h2>Error: { error }</h2> }
         <Row>
             <Col sm={4}>
                 <Row>

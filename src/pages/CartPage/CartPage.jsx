@@ -10,14 +10,13 @@ import { fetchCart, removeFromCart } from '../../store/cartSlice';
 import './CartPage.css';
 
 export const CartPage = () =>{
-    const products = useSelector(state => state.cart.products);
+    const products = useSelector(state => state.cart.cartProducts);
     const currentUser = useSelector(state => state.cart.user);
     const dispatch = useDispatch();
     
     const removeProduct = (product, currentUser) => {
-        console.log('product on page', product);
-        console.log('user on page', currentUser);
         dispatch(removeFromCart({product, currentUser}));
+        dispatch(fetchCart(currentUser));
     }
 
     return (

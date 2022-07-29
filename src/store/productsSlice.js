@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { collection, doc, docs, getDoc, setDoc, getFirestore, where, query, orderBy, getDocs, limit, onSnapshot, startAt, startAfter } from "firebase/firestore"; 
+import { collection, doc, setDoc, getFirestore, query, orderBy, getDocs, limit } from "firebase/firestore"; 
 import '../fireBase';
 
 const firestore = getFirestore();
@@ -14,7 +14,6 @@ export const fetchProducts = createAsyncThunk(
                 collection(firestore, `${'categories/' + queryTitle + '/products'}`),
                 orderBy(queryOrder.orderBy, queryOrder.orderType),
                 limit(queryLimit),
-                // startAt(queryStart),
             );
 
             const querySnapshot = await getDocs(productsQuery);
@@ -22,8 +21,7 @@ export const fetchProducts = createAsyncThunk(
             function allDocs() {
                 let data = [];
                 
-                querySnapshot.forEach((snap) => {
-                    // console.log(`Document ${snap.id} contains ${JSON.stringify(snap.data())}`);
+                querySnapshot.forEach((snap) => {;
                     data.push(snap.data());
                     return data;
                 });
@@ -71,7 +69,6 @@ export const addProduct = createAsyncThunk(
 const setError = (state, action) => {
     state.error = action.payload;
     state.status = 'rejected';
-    console.log(state.error);
 }
 
 const productsSlice = createSlice({
@@ -79,21 +76,21 @@ const productsSlice = createSlice({
     initialState: {
         count: 0,
         products: [],
+        filteredProducts: [],
+        searchedProducts: [],
         status: null,
         error: null,
         queryParams: {
             queryTitle: 'Сalico',
-            queryLimit: 4,
-            // queryStart: 1,
             queryOrder: {
                 orderBy: 'id',
                 orderType: 'asc'
             }
         },
-        filterRules: [
-            {filterBy: "age", comparator: "Дитячий"},
-            // {filterBy: "size", comparator: "Полуторний"}
-        ]
+        filterRules: [],
+        rowLength: 4,
+        moreLimiter: 4,
+        moreCounter: 1
     },
     reducers: {
         setQueryParams(state, action) {
@@ -101,10 +98,26 @@ const productsSlice = createSlice({
             action.payload.queryLimit ? state.queryParams.queryLimit = action.payload.queryLimit : state.queryParams.queryLimit = state.queryParams.queryLimit;
             action.payload.queryStart ? state.queryParams.queryStart = action.payload.queryStart : state.queryParams.queryStart = state.queryParams.queryStart;
             action.payload.queryOrder ? state.queryParams.queryOrder = action.payload.queryOrder : state.queryParams.queryOrder = state.queryParams.queryOrder;
-            action.payload.queryFilterRules ? state.queryParams.queryFilterRules = action.payload.queryFilterRules : state.queryParams.queryFilterRules = state.queryParams.queryFilterRules;
         },
         setFilterRules(state, action) {
-            if(action.payload.filterRule) state.filterRules.push(action.payload.filterRule);
+            state.filterRules = [];
+            if (action.payload.length > 0) {
+                action.payload.forEach(filterRule => state.filterRules.push(filterRule))
+            }
+        },
+        filterProducts(state) {
+            state.filteredProducts = state.products;
+            if(state.filterRules.length > 0) state.filterRules.forEach(filterRule => state.filteredProducts = state.filteredProducts.filter(product => product[filterRule.filterBy] === filterRule.comparator))
+            else return;
+        },
+        searchProducts(state, action) {
+            state.searchedProducts = action.payload;
+        },
+        moreCounterIncrement(state) {
+            state.moreCounter += 1;
+        },
+        increaseLimiter(state) {
+            state.moreLimiter = state.moreCounter * state.rowLength;
         }
     },
     extraReducers: {
@@ -120,6 +133,5 @@ const productsSlice = createSlice({
     }
 })
 
-export const { setQueryParams, setFilterRules } = productsSlice.actions;
+export const { setQueryParams, setFilterRules, filterProducts, moreCounterIncrement, increaseLimiter, searchProducts } = productsSlice.actions;
 export default productsSlice.reducer;
-// export const { increment } = productsSlice.actions;

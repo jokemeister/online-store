@@ -9,18 +9,18 @@ import { Search } from '../search/Search';
 
 
 export const Header = () => {
-    const сartProducts = useSelector(state => state.cart.products);
-    const favoriteProducts = useSelector(state => state.favorite.products);
+    const сartProducts = useSelector(state => state.cart.cartProducts);
+    const favoriteProducts = useSelector(state => state.favorite.favoriteProducts);
     const currentUser = useSelector(state => state.cart.user);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchCart(currentUser));
-    }, [сartProducts]);
+    }, [currentUser]);
 
     useEffect(() => {
         dispatch(fetchFavorite(currentUser));
-    }, [favoriteProducts]);
+    }, [currentUser]);
 
     return (
         <header>
@@ -181,9 +181,9 @@ export const Header = () => {
                                         Бязь
                                     </li>
                                 </NavLink>
-                                <NavLink to="/sales">
+                                <NavLink to="/categories/Stripe-sateen">
                                     <li className="header-bottom__list__item">
-                                        Акції
+                                        Страйп-сатин
                                     </li>
                                 </NavLink>
                                 <NavLink to="/contacts">

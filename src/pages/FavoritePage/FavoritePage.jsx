@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEffect } from 'react';
 
 import Table from 'react-bootstrap/Table';
 import CloseButton from 'react-bootstrap/CloseButton';
@@ -7,15 +6,16 @@ import Button from 'react-bootstrap/Button';
 
 import { useDispatch, useSelector } from 'react-redux';
 import './FavoritePage.css';
-import { removeFromFavorite } from '../../store/favoriteSlice';
+import { fetchFavorite, removeFromFavorite } from '../../store/favoriteSlice';
 
 export const FavoritePage = () =>{
-    const products = useSelector(state => state.favorite.products);
-    const currentUser = useSelector(state => state.favorite.user);
+    const favoriteProducts = useSelector(state => state.favorite.favoriteProducts);
+    const currentUser = useSelector(state => state.cart.user);
     const dispatch = useDispatch();
     
     const removeProduct = (product, currentUser) => {
         dispatch(removeFromFavorite({product, currentUser}));
+        dispatch(fetchFavorite(currentUser));
     }
 
     return (
@@ -31,7 +31,7 @@ export const FavoritePage = () =>{
                     </tr>
                 </thead>
                 <tbody>
-                    {products?.map((product) => (
+                    {favoriteProducts?.map((product) => (
                     <tr key={product.tag}>
                         <td><img className='table__img' src={product.img} alt={product.title} /></td>
                         <td>{product.title}</td>

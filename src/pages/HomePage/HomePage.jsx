@@ -1,6 +1,5 @@
 import React from 'react';
-import Categories from '../../components/categories';
-import './HomePage.css'
+import './HomePage.css';
 
 export const HomePage = () =>{
     return (
@@ -9,11 +8,10 @@ export const HomePage = () =>{
             <h2>Контент лише на наступних елемента:</h2>
             <ul>
                 <li>Категорії</li>
-                <li>Постільна білизна</li>
-                <li>Окремі карточки товарів в рамках постільної білизни</li>
+                <li>Сторінки окремих категорій</li>
+                <li>Окремі карточки товарів</li>
                 <li>Обране (сердечко)</li>
                 <li>Кошик</li>
-                <li>Акції</li>
             </ul>
         </>
     )

@@ -1,24 +1,37 @@
 import React from "react";
 import './Search.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilterRules, fetchProducts } from '../../store/productsSlice';
+import { searchProducts } from '../../store/productsSlice';
 import { useEffect } from "react";
 
 export const Search = () => {
     const dispatch = useDispatch(),
-        filterRules = useSelector(state => state.products.filterRules);
-    
-    useEffect(() => {
-        console.log(filterRules);
+        filteredProducts = useSelector(state => state.products.filteredProducts);
         const SearchInput = document.querySelector('.searchInput');
-        console.log('====================================');
-        console.log(SearchInput.value);
-        console.log('====================================');
-    }, [])
+
+    function searchItems(str, subStr) {
+        return str.toUpperCase().includes(subStr.trim().toUpperCase());
+    }
+    
+    function filterItems(arr, searchStr) {
+        if (searchStr.length > 0) {
+            let filteredArray = arr.filter((product) => {
+                if (product.title) {
+                    return searchItems(product.title, searchStr);
+                } else return true;
+            });
+            dispatch(searchProducts(filteredArray));
+        } else dispatch(searchProducts(filteredProducts));
+    }
+
+    useEffect(() => {
+        dispatch(searchProducts(filteredProducts))
+    }, [filteredProducts])
+    // /list 
 
     return (
         <li className="header-bottom__list__item">
-            <input className="searchInput" type="text" placeholder="Пошук" />
+            <input onChange={() => filterItems(filteredProducts, SearchInput.value)} className="searchInput" type="text" placeholder="Пошук" />
         </li>
     )
 }

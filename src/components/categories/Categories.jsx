@@ -15,42 +15,9 @@ import { fetchCategories } from '../../store/categoriesSlice';
 export const Categories = () => {
   const categories = useSelector(state => state.categories.categories);
 
-    // async function writeNewDocCollection() {
-    //   const newCategory = doc(firestore, 'categories/checker');
-    //   const childDoc = doc(newCategory, '../Велюр');
-    //   const docData = { "id": 1, "title": "Бязь Голд", "img":"../../../publick/assets/images/categories" };
-    //   setDoc(specialOfTheDay, docData);
-    //   setDoc(specialOfTheDay, docData, { merge: true });
-    //   updateDoc(specialOfTheDay, docData);
-    //   try {
-    //     await setDoc(newCategory, docData, { merge: true });
-    //     console.log('This value has been written to the database');
-    //   } catch (error) {
-    //     console.log(`I got an error! ${error}`);
-    //   }
-    // }
-  
-    // const ByazCategory = doc(firestore, 'categories/Бязь Голд');
-  
-
-  
-    // function listenToADocument() {
-    //   onSnapshot(ByazCategory, docSnapshot => {
-    //     if (docSnapshot.exists()) {
-    //       const docData = docSnapshot.data();
-    //       console.log(`My data is ${JSON.stringify(docData)}`);
-    //     };
-    //   });
-    // };
-  
-
-    // readASingleDocument();
-    // listenToADocument();
-
     const { error, status } = useSelector(state => state.categories);
     const dispatch = useDispatch();
     useEffect(() => {
-      console.log('categories fetching');
       dispatch(fetchCategories())
     }, [dispatch])
 
