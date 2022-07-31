@@ -14,7 +14,7 @@ export const Breadcrumbs = () => {
     <div className="container">
       <Breadcrumb>
         {breadcrumbs.map(({ breadcrumb }) =>
-          <Breadcrumb.Item key={breadcrumb.key} href={breadcrumb.key} active={breadcrumb.key === location.pathname}>
+          <Breadcrumb.Item key={breadcrumb.key} href={process.env.PUBLIC_URL+`/#${breadcrumb.key}`} active={breadcrumb.key === location.pathname}>
             { translate(breadcrumb.props.children.toLowerCase()) }
           </Breadcrumb.Item >
         )}
