@@ -8,6 +8,7 @@ import { NavLink } from 'react-router-dom';
 
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { fetchCategories } from '../../store/categoriesSlice';
 
 
@@ -15,11 +16,11 @@ import { fetchCategories } from '../../store/categoriesSlice';
 export const Categories = () => {
   const categories = useSelector(state => state.categories.categories);
 
-    const { error, status } = useSelector(state => state.categories);
-    const dispatch = useDispatch();
-    useEffect(() => {
-      dispatch(fetchCategories())
-    }, [dispatch])
+  const { error, status } = useSelector(state => state.categories);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
 
   return (
     <div>
@@ -44,5 +45,5 @@ export const Categories = () => {
       </Row>
     </div>
   );
-}
+};
 

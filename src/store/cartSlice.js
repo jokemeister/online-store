@@ -5,104 +5,104 @@ import '../fireBase';
 const firestore = getFirestore();
 
 export const fetchCart = createAsyncThunk(
-    'cart/fetchCart',
+  'cart/fetchCart',
 
-    async function queryForDocuments(currentUser, {rejectWithValue}) {
-        try {
-            const cartQuery = query(
-                collection(firestore, `${'cart/' + currentUser + '/products'}`),
-                orderBy('id', 'asc')
-            );
+  async function queryForDocuments(currentUser, {rejectWithValue}) {
+    try {
+      const cartQuery = query(
+        collection(firestore, `${'cart/' + currentUser + '/products'}`),
+        orderBy('id', 'asc')
+      );
 
-            const querySnapshot = await getDocs(cartQuery);
+      const querySnapshot = await getDocs(cartQuery);
             
-            function allDocs() {
-                let data = [];
-                querySnapshot.forEach((snap) => {
-                    data.push(snap.data());
-                    return data;
-                });
-                if (querySnapshot.empty) {
-                    return data;
-                }
-                return data;
-            }
-            return allDocs();
-        } catch (error) {
-            return rejectWithValue(error.message);
+      function allDocs() {
+        const data = [];
+        querySnapshot.forEach((snap) => {
+          data.push(snap.data());
+          return data;
+        });
+        if (querySnapshot.empty) {
+          return data;
         }
-
+        return data;
+      }
+      return allDocs();
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
+
+  }
 );
 
 export const createUserCart = createAsyncThunk(
-    'cart/createUserCart',
+  'cart/createUserCart',
 
-    async function(ip, {rejectWithValue}) {
-        const user = ip;
-        try {
-            await setDoc(doc(firestore, `${'cart/'}`, ip), user);
-        } catch (error) {
-            return rejectWithValue(error.message);
-        }
+  async function(ip, {rejectWithValue}) {
+    const user = ip;
+    try {
+      await setDoc(doc(firestore, `${'cart/'}`, ip), user);
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
+  }
 );
 
 export const addToCart = createAsyncThunk(
-    'cart/addToCart',
+  'cart/addToCart',
 
-    async function({product, currentUser}, {rejectWithValue}) {
-        try {
-            await setDoc(doc(firestore, `${'cart/' + currentUser + '/products'}`, product.tag), product);
-        } catch (error) {
-            return rejectWithValue(error.message);
-        }
+  async function({product, currentUser}, {rejectWithValue}) {
+    try {
+      await setDoc(doc(firestore, `${'cart/' + currentUser + '/products'}`, product.tag), product);
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
+  }
 );
 
 export const removeFromCart = createAsyncThunk(
-    'cart/removeFromCart',
+  'cart/removeFromCart',
 
-    async function({product, currentUser}, {rejectWithValue}) {
-        try {
-            await deleteDoc(doc(firestore, `${'cart/' + currentUser + '/products'}`, product.tag));
-        } catch (error) {
-            return rejectWithValue(error.message);
-        }
+  async function({product, currentUser}, {rejectWithValue}) {
+    try {
+      await deleteDoc(doc(firestore, `${'cart/' + currentUser + '/products'}`, product.tag));
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
+  }
 );
 
 const setError = (state, action) => {
-    state.error = action.payload;
-    state.status = 'rejected';
-    console.log(state.error);
-}
+  state.error = action.payload;
+  state.status = 'rejected';
+  console.log(state.error);
+};
 
 const cartSlice = createSlice({
-    name: 'cart',
-    initialState: {
-        user: '103.227.87.140',
-        cartProducts: [],
-        status: null,
-        error: null,
+  name: 'cart',
+  initialState: {
+    user: '103.227.87.140',
+    cartProducts: [],
+    status: null,
+    error: null,
+  },
+  reducers: {
+    setCurrentUser(state, action) {
+      state.user = action.payload;
     },
-    reducers: {
-        setCurrentUser(state, action) {
-            state.user = action.payload;
-        },
+  },
+  extraReducers: {
+    [fetchCart.pending]: (state) => {
+      state.status = "loading";
+      state.error = null;
     },
-    extraReducers: {
-        [fetchCart.pending]: (state) => {
-            state.status = "loading";
-            state.error = null;
-        },
-        [fetchCart.fulfilled]: (state, action) => {
-            state.cartProducts = action.payload;
-            state.status = "resolved";
-        },
-        [fetchCart.rejected]: setError
-    }
-})
+    [fetchCart.fulfilled]: (state, action) => {
+      state.cartProducts = action.payload;
+      state.status = "resolved";
+    },
+    [fetchCart.rejected]: setError
+  }
+});
 
 export const { setCurrentUser } = cartSlice.actions;
 export default cartSlice.reducer;

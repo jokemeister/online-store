@@ -1,7 +1,7 @@
 {
   "name": "online-store",
   "version": "0.1.0",
-  "homepage": "https://jokemeister.github.io/online-store",
+  "homepage": "https://jokemeister.github.io/online-store/",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.3",
@@ -30,13 +30,9 @@
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "eject": "react-scripts eject",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix"
   },
   "browserslist": {
     "production": [
