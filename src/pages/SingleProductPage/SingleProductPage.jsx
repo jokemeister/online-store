@@ -20,11 +20,11 @@ export const SingleProductPage = () => {
   const { user } = useSelector(state => state.cart);
   const { error, status } = useSelector(state => state.products);
   const dispatch = useDispatch();
-  const { queryTag } = useParams();
+  const { queryId} = useParams();
 
   // get product for render
   const findProduct = () => {
-    let currentProduct = products.find(product => product.tag === queryTag);
+    let currentProduct = products.find(product => product.id === queryId);
     if (currentProduct) {
       localStorage.setItem('currentProduct', JSON.stringify(currentProduct));
     } else currentProduct = JSON.parse(localStorage.getItem('currentProduct'));
@@ -70,7 +70,7 @@ export const SingleProductPage = () => {
       <Row>
         <Col sm={4}>
           <Row>
-            <img className='primary-image' src={process.env.PUBLIC_URL+`${product.img}`} alt="" />
+            { (product.images) ? <img className='primary-image' src={process.env.PUBLIC_URL+`${product.images[0]}`} alt="" /> : <img className='primary-image' src={process.env.PUBLIC_URL+`${product.img}`} alt="" /> }
           </Row>
           <Row>
             <div className="gallery-block">
@@ -95,24 +95,28 @@ export const SingleProductPage = () => {
             </thead>
             <tbody>
               <tr>
-                <td>Матеріал виробництва</td>
-                <td>{product.material}</td>
+                <td>Виробник</td>
+                <td>{product.manufacturer}</td>
               </tr>
               <tr>
-                <td>Розмір комплекту</td>
-                <td>{product.size}</td>
+                <td>Рік виробництва</td>
+                <td>{product.year}</td>
               </tr>
               <tr>
-                <td>Вік користувача</td>
-                <td>{product.age}</td>
+                <td>Обʼєм двигуна</td>
+                <td>{product.engine} л</td>
               </tr>
               <tr>
-                <td>Артикул</td>
-                <td>{product.tag}</td>
+                <td>Потужність</td>
+                <td>{product.hp} к.с.</td>
+              </tr>
+              <tr>
+                <td>Колір</td>
+                <td>{product.color}</td>
               </tr>
             </tbody>
           </Table>
-          <h3>{product.price} грн</h3>
+          <h3>{product.price} USD</h3>
           <ButtonGroup aria-label="Basic example">
             <Button onClick={() => addProductToFavorite(product, user)} variant="info">
               <svg enableBackground="new 0 0 485.3 485.3" version="1.1" viewBox="0 0 485.3 485.3" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" fill="currentColor">

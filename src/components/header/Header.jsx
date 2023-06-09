@@ -168,34 +168,14 @@ export const Header = () => {
         <div className="container">
           <div className="header-bottom">
             <ul className="header-bottom__list">
-              <NavLink to="/categories">
+              <NavLink to="/cars">
                 <li className="header-bottom__list__item">
-                  <p>Категорії</p>
+                  <p>Усі автомобілі</p>
                   <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
                     <path d="m3 7c0-0.55229 0.44772-1 1-1h20c0.5523 0 1 0.44771 1 1s-0.4477 1-1 1h-20c-0.55228 0-1-0.44771-1-1z"/>
                     <path d="m3 14c0-0.5523 0.44772-1 1-1h20c0.5523 0 1 0.4477 1 1s-0.4477 1-1 1h-20c-0.55228 0-1-0.4477-1-1z"/>
                     <path d="m4 20c-0.55228 0-1 0.4477-1 1s0.44772 1 1 1h20c0.5523 0 1-0.4477 1-1s-0.4477-1-1-1h-20z"/>
                   </svg>
-                </li>
-              </NavLink>
-              <NavLink to="/categories/Calico">
-                <li className="header-bottom__list__item">
-                                        Бязь
-                </li>
-              </NavLink>
-              <NavLink to="/categories/Stripe-sateen">
-                <li className="header-bottom__list__item">
-                                        Страйп-сатин
-                </li>
-              </NavLink>
-              <NavLink to="/contacts">
-                <li className="header-bottom__list__item">
-                                        Контакти
-                </li>
-              </NavLink>
-              <NavLink to="/blog">
-                <li className="header-bottom__list__item">
-                                        Блог
                 </li>
               </NavLink>
               <Search />

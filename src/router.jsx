@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import { Layout } from './components/Layout';
 
-import { HomePage, CategoriesPage, ProductsPage, SingleProductPage, ComparisonPage, FavoritePage, CartPage, UserPage, AboutPage, DeliveryPage, ContactsPage, BlogPage } from './pages';
+import { HomePage, ProductsPage, SingleProductPage, ComparisonPage, FavoritePage, CartPage, UserPage, AboutPage, DeliveryPage, ContactsPage, BlogPage } from './pages';
 
 export const Router = () => {
   return (
@@ -15,9 +15,8 @@ export const Router = () => {
         <Route path="/comparison" element={ <ComparisonPage /> } />
         <Route path="/favorite" element={ <FavoritePage /> } />
         <Route path="/cart" element={ <CartPage /> } />
-        <Route path="/categories" element={ <CategoriesPage /> } />
-        <Route path="/categories/:queryTitle" element={ <ProductsPage /> } />
-        <Route path="/categories/:queryTitle/:queryTag" element={ <SingleProductPage /> } />
+        <Route path="/cars" element={ <ProductsPage /> } />
+        <Route path="/cars/:queryId/" element={ <SingleProductPage /> } />
         <Route path="/contacts" element={ <ContactsPage /> } />
         <Route path="/blog" element={ <BlogPage /> } />
       </Route>

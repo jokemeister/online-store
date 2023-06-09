@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { collection, doc, setDoc, getFirestore, query, orderBy, getDocs, limit } from "firebase/firestore"; 
+import { collection, doc, setDoc, getFirestore, query, orderBy, getDocs, limit, deleteDoc } from "firebase/firestore"; 
 import '../fireBase';
 
 const firestore = getFirestore();
@@ -7,21 +7,26 @@ const firestore = getFirestore();
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
 
-
-  async function queryForDocuments({ queryTitle, queryLimit, queryOrder }, {rejectWithValue}) {
+  async function queryForDocuments({ queryLimit, queryOrder }, {rejectWithValue}) {
     try {
+      console.log("queryLimit, queryOrder", { queryLimit, queryOrder });
       const productsQuery = query(
-        collection(firestore, `${'categories/' + queryTitle + '/products'}`),
+        collection(firestore, "/cars"),
         orderBy(queryOrder.orderBy, queryOrder.orderType),
         limit(queryLimit),
       );
 
+      console.log("productsQuery", productsQuery);
+
       const querySnapshot = await getDocs(productsQuery);
+
+      console.log("querySnapshot", querySnapshot);
             
       function allDocs() {
         const data = [];
                 
-        querySnapshot.forEach((snap) => {;
+        querySnapshot.forEach((snap) => {
+          console.log(snap.data());
           data.push(snap.data());
           return data;
         });
@@ -34,32 +39,43 @@ export const fetchProducts = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
+  }
+);
 
+export const deleteProduct = createAsyncThunk(
+  'products/deleteProduct',
+
+  async function(productId, {rejectWithValue, dispatch}) {
+    console.log("productId", productId);
+    try {
+      await deleteDoc(doc(firestore, 'cars', `${productId}`));
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
 export const addProduct = createAsyncThunk(
   'products/addProduct',
 
-  async function(queryTitle, {rejectWithValue, dispatch}) {
+  async function({rejectWithValue, dispatch}) {
     const product = {
-      id: 6,
-      title: "Лаванда",
-      body: "Крутий класний комплект прям такий, що аж спати в ньому хочеться і день, і ніч, і ніч, і день, і навіть не з кимось, а самому, адже таким золотом просто не хочеться ділитися ні з ким. Це просто вау комплект - рекомендую всім",
-      tag: "AC0006",
-      material: "Бязь",
-      size: "Двоспальний",
-      age: "Дорослий",
-      img: "/assets/images/categories/calico/products/adults/AC0005/1.jpg",
+      id: 7,
+      title: "Якась тачка",
+      body: "Дуже крута тачка за свої гроші",
+      year: 2022,
+      hp: 380,
+      engine: 2.4,
+      manufacturer: "Volkswagen",
       images: [
         "assets/images/categories/calico/products/adults/AC0005/2.jpg",
         "assets/images/categories/calico/products/adults/AC0005/3.jpg",
       ],
-      sale: "true",
-      available: "true"
+      color: "синій",
+      price: 10000,
     };
     try {
-      await setDoc(doc(firestore, `${'categories/' + queryTitle + '/products'}`, product.tag), product);
+      await setDoc(doc(firestore, 'cars/', product.title), product);
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -81,20 +97,20 @@ const productsSlice = createSlice({
     status: null,
     error: null,
     queryParams: {
-      queryTitle: 'Сalico',
       queryOrder: {
         orderBy: 'id',
         orderType: 'asc'
       }
     },
     filterRules: [],
-    rowLength: 4,
-    moreLimiter: 4,
+    rowLength: 3,
+    moreLimiter: 3,
     moreCounter: 1
   },
   reducers: {
     setQueryParams(state, action) {
       if (action.payload.queryTitle) state.queryParams.queryTitle = action.payload.queryTitle;
+      else state.queryParams.queryTitle = null;
       if (action.payload.queryLimit) state.queryParams.queryLimit = action.payload.queryLimit;
       if (action.payload.queryStart) state.queryParams.queryStart = action.payload.queryStart;
       if (action.payload.queryOrder) state.queryParams.queryOrder = action.payload.queryOrder;
@@ -112,6 +128,9 @@ const productsSlice = createSlice({
     },
     searchProducts(state, action) {
       state.searchedProducts = action.payload;
+    },
+    deleteProduct(state, action) {
+       console.log(action.payload);
     },
     moreCounterIncrement(state) {
       state.moreCounter += 1;

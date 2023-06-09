@@ -2,12 +2,12 @@ import { initializeApp } from "@firebase/app";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDMYxRDITyIpWrutLTgxmxgyouYEHcn7J0",
-  authDomain: "online-store-exam.firebaseapp.com",
-  projectId: "online-store-exam",
-  storageBucket: "online-store-exam.appspot.com",
-  messagingSenderId: "487024541148",
-  appId: "1:487024541148:web:8b6ad8a78f174fab05e319"
+  apiKey: "AIzaSyDHut9hHGhs18pjs_1nGEGGHysFrDj_QdU",
+  authDomain: "automobile-catalog-exam.firebaseapp.com",
+  projectId: "automobile-catalog-exam",
+  storageBucket: "automobile-catalog-exam.appspot.com",
+  messagingSenderId: "752080877131",
+  appId: "1:752080877131:web:2755a1d9908a336a1fbfce"
 };
     
 // Initialize Firebase

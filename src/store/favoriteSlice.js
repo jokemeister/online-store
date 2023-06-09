@@ -33,8 +33,6 @@ export const fetchFavorite = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-        
-
   }
 );
 

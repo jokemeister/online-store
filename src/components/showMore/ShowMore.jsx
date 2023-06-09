@@ -19,7 +19,7 @@ export const ShowMore = () => {
       variant="primary"
       onClick={ showMore }
     >
-            Показати більше товарів
+      Показати більше товарів
     </Button>
   );
 };

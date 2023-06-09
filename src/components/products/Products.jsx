@@ -10,9 +10,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useParams } from 'react-router-dom';
-
-import { fetchProducts, setQueryParams, filterProducts } from '../../store/productsSlice';
+import { fetchProducts, filterProducts, deleteProduct } from '../../store/productsSlice';
 import { addToCart, fetchCart } from '../../store/cartSlice';
 import { addToFavorite, fetchFavorite } from '../../store/favoriteSlice';
 
@@ -25,23 +23,22 @@ export const Products = () => {
   // /working with store
 
   // working with routing
-  const { queryTitle } = useParams(),
-    navigate = useNavigate(),
-    goProduct = (product) => navigate(`/categories/${queryTitle}/${product.tag}`);
+    const navigate = useNavigate(),
+    goProduct = (product) => navigate(`/cars/${product.id}`);
   // /working with routing
 
-  // fetching products from store with routing params
+  // fetching products from store
   useEffect(() => {
-    dispatch(setQueryParams({ queryTitle }));
-  }, [queryTitle]);
-
-  useEffect(() => {
+    console.log(queryParams);
     dispatch(fetchProducts(queryParams));
   }, [queryParams]);
-  // /fetching products from store with routing params
+
+
+  // /fetching products from store
 
   // filtering products
   useEffect(() => {
+    console.log(products);
     dispatch(filterProducts(filterRules));
   }, [products]);
 
@@ -49,6 +46,14 @@ export const Products = () => {
     dispatch(filterProducts(filterRules));
   }, [filterRules]);
   // /filtering products
+
+    // cart
+    const removeProduct = (productId, e) => {
+      e.stopPropagation();
+      dispatch(deleteProduct(productId));
+      dispatch(fetchProducts(queryParams));
+    };
+    // /cart
 
   // cart
   const addProductToCart = (product, currentUser, e) => {
@@ -72,15 +77,15 @@ export const Products = () => {
       { error && <h2>Error: { error }</h2> }
       <Row xs={1} md={rowLength} className="g-4">
         {searchedProducts.map((product, index) => (index < moreLimiter) && (
-          <Col key={ product.tag }>
+          <Col key={ product.id }>
             <Card onClick={() => goProduct(product)}>
-              <Card.Img variant="top" src={process.env.PUBLIC_URL+`${product.img}`} />
+              <Card.Img variant="top" src={process.env.PUBLIC_URL+`${product.images[0]}`} />
               <Card.Body>
                 <Card.Title>{ product.title }</Card.Title>
                 <Card.Text>
                   { product.body }
                 </Card.Text>
-                <Card.Title>{ product.price + ' грн'}</Card.Title>
+                <Card.Title>{ product.price + ' USD'}</Card.Title>
                 <ButtonGroup aria-label="Basic example">
                   <Button variant="info">Більше</Button>
                   <Button onClick={(e) => addProductToFavorite(product, user, e)} variant="info">
@@ -94,6 +99,9 @@ export const Products = () => {
                       <path className="ci-primary" d="m176.98 368.34a64.073 64.073 0 0 0-64 64 64 64 0 0 0 128 0 64.072 64.072 0 0 0-64-64zm0 96a32 32 0 1 1 32-32 32.038 32.038 0 0 1-32 32z" fill="var(--ci-primary-color, currentColor)"/>
                       <path className="ci-primary" d="m400.98 368.34a64.073 64.073 0 0 0-64 64 64 64 0 0 0 128 0 64.072 64.072 0 0 0-64-64zm0 96a32 32 0 1 1 32-32 32.038 32.038 0 0 1-32 32z" fill="var(--ci-primary-color, currentColor)"/>
                     </svg>
+                  </Button>
+                  <Button onClick={(e) => removeProduct(product.id, e)} variant="info">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/></svg>
                   </Button>
                 </ButtonGroup>
               </Card.Body>

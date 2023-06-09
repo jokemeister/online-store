@@ -1,19 +1,21 @@
 .card {
-    width: 16.5rem !important;
-    align-items: center !important;
+	width: 16.5rem !important;
+	align-items: center !important;
 	cursor: pointer;
 }
 
 .card-img-top {
-    width: 16.5rem !important;
-    height: 16.5rem !important;
+	width: 100% !important;
+	height: auto !important;
+	object-fit: cover;
+	object-position: center;
 }
 
 .card-text {
-    overflow: hidden !important;
+	overflow: hidden !important;
 	position: relative !important;
 	height: 4rem !important;
-    margin-bottom: 1rem !important;
+	margin-bottom: 1rem !important;
 }
 
 .card-text:after {
@@ -26,6 +28,10 @@
 	height: 1.2rem !important;
 	background: linear-gradient(to bottom, rgba(255, 255, 255, 0), white 100%) !important;
 	pointer-events: none !important;
+}
+
+.btn-group {
+	z-index: 2;
 }
 
 svg {
