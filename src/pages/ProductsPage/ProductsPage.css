@@ -1,15 +1,5 @@
-.col-2 {
+.col-3 {
     position: relative;
     background-color: rgb(166, 213, 231) !important;
     padding: 1rem;
-}
-
-.col-2::before {
-    content: ' ';
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    left: -99.5%;
-    top: 0;
-    background-color: rgb(166, 213, 231) !important;
 }

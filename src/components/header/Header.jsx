@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import './Header.css';
 import { useDispatch, useSelector } from 'react-redux';
 
-import logo from '../../assets/images/logo/logo_2.jpg';
+import logo from '../../assets/images/logo/logo_2.png';
 import { fetchCart } from '../../store/cartSlice';
 import { fetchFavorite } from '../../store/favoriteSlice';
 import { Search } from '../search/Search';
@@ -31,7 +31,7 @@ export const Header = () => {
         <div className="container">
           <div className="header-top">
             <div className="header-top__left">
-              <p>Інтернет-магазин постільної білизни №1</p>
+              <p>Інтернет-магазин автомобілів №1</p>
             </div>
             <div className="header-top__right">
               <ul className="header-top__right__menu">
@@ -104,9 +104,9 @@ export const Header = () => {
                 </div>
               </li>
               <li className="header-middle__center__menu__item header-middle__center__menu__numbers">
-                <a href="tel: +380975113833">+38 097 511 38 33</a>
-                <a href="tel: +380967313317">+38 096 731 33 17</a>
-                <a href="tel: +380953434120">+38 095 343 41 20</a>
+                <a href="tel: +380975113833">+38 096 511 37 33</a>
+                <a href="tel: +380967313317">+38 097 731 32 17</a>
+                <a href="tel: +380953434120">+38 050 343 40 20</a>
               </li>
               <li className="header-middle__center__menu__item header-middle__center__time">
                 <svg enableBackground="new 0 0 300.988 300.988" version="1.1" viewBox="0 0 300.99 300.99" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
@@ -116,8 +116,8 @@ export const Header = () => {
                 <div>
                   <p><b>Пн-Пт: </b>9:00 - 20:00</p>
                   <p><b>Сб-Нд: </b>10:00 - 18:00</p>
-                  <p>Відправляємо замовлення</p>
-                  <p>Новою Поштою</p>
+                  <p>Відправляємо автомобілі</p>
+                  <p>паромами</p>
                 </div>
               </li>
             </ul>

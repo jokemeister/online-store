@@ -3,7 +3,7 @@ import React from 'react';
 export const Footer = () =>{
   return (
     <footer>
-                (c) by Dubrovskyi 2022
+                (c) by Nazar 2023
     </footer>
   );
 };

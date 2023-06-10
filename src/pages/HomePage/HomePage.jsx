@@ -46,7 +46,7 @@ export const HomePage = () =>{
   return (
     <div className="container">
       <Row>
-        <Col xs={2}>
+        <Col xs={3}>
           <Filter />
         </Col>
         <Col>

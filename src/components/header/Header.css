@@ -54,7 +54,8 @@
     }
 
     .header-middle__left__logo {
-        width: 15rem;
+        width: 9rem;
+        height: auto;
     }
 
     .header-middle__center__menu {
