@@ -34,7 +34,7 @@ export const CartPage = () =>{
         <tbody>
           {products?.map((product) => (
             <tr key={product.tag}>
-              <td><img className='table__img' src={process.env.PUBLIC_URL+`${product.img}`} alt={product.title} /></td>
+              <td><img className='table__img' src={process.env.PUBLIC_URL+`${product.images[0]}`} alt={product.title} /></td>
               <td>{product.title}</td>
               <td>{product.price}</td>
               <td><CloseButton onClick={() => removeProduct(product, currentUser)} /></td>

@@ -40,9 +40,8 @@ export const createUserFavorite = createAsyncThunk(
   'favorite/createUserFavorite',
 
   async function(ip, {rejectWithValue}) {
-    const user = ip;
     try {
-      await setDoc(doc(firestore, `${'favorite/'}`, ip), user);
+      await setDoc(doc(firestore, 'favorite', ip), {ip_address: ip});
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -53,9 +52,12 @@ export const addToFavorite = createAsyncThunk(
   'favorite/addToFavorite',
 
   async function({product, currentUser}, {rejectWithValue}) {
+    console.log(product.id, currentUser);
+    console.log(`${'favorite/' + currentUser + '/products'}`);
     try {
-      await setDoc(doc(firestore, `${'favorite/' + currentUser + '/products'}`, product.tag), product);
+      await setDoc(doc(firestore, `${'favorite/' + currentUser + '/products'}`, String(product.id)), product);
     } catch (error) {
+      console.log(error.message);
       return rejectWithValue(error.message);
     }
   }
@@ -66,7 +68,7 @@ export const removeFromFavorite = createAsyncThunk(
 
   async function({product, currentUser}, {rejectWithValue}) {
     try {
-      await deleteDoc(doc(firestore, `${'favorite/' + currentUser + '/products'}`, product.tag));
+      await deleteDoc(doc(firestore, `${'favorite/' + currentUser + '/products'}`, String(product.id)));
     } catch (error) {
       return rejectWithValue(error.message);
     }

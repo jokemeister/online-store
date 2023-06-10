@@ -75,7 +75,7 @@ export const addProduct = createAsyncThunk(
       price: 10000,
     };
     try {
-      await setDoc(doc(firestore, 'cars/', product.title), product);
+      await setDoc(doc(firestore, 'cars/', product.id), product);
     } catch (error) {
       return rejectWithValue(error.message);
     }

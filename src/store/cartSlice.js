@@ -39,9 +39,8 @@ export const createUserCart = createAsyncThunk(
   'cart/createUserCart',
 
   async function(ip, {rejectWithValue}) {
-    const user = ip;
     try {
-      await setDoc(doc(firestore, `${'cart/'}`, ip), user);
+      await setDoc(doc(firestore, 'cart', ip), {ip_address: ip});
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -53,7 +52,7 @@ export const addToCart = createAsyncThunk(
 
   async function({product, currentUser}, {rejectWithValue}) {
     try {
-      await setDoc(doc(firestore, `${'cart/' + currentUser + '/products'}`, product.tag), product);
+      await setDoc(doc(firestore, `${'cart/' + currentUser + '/products'}`, String(product.id)), product);
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -65,7 +64,7 @@ export const removeFromCart = createAsyncThunk(
 
   async function({product, currentUser}, {rejectWithValue}) {
     try {
-      await deleteDoc(doc(firestore, `${'cart/' + currentUser + '/products'}`, product.tag));
+      await deleteDoc(doc(firestore, `${'cart/' + currentUser + '/products'}`, String(product.id)));
     } catch (error) {
       return rejectWithValue(error.message);
     }

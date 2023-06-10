@@ -29,6 +29,7 @@ export const HomePage = () =>{
     xmlhttp.onreadystatechange = function() {
       if (this.readyState === 4 && this.status === 200) {
         var result = JSON.parse(this.responseText);
+        console.log("ip", result.ip_address);
 
         dispatch(setCurrentUser(result.ip_address));
         dispatch(createUserCart(result.ip_address));
